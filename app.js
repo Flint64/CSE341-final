@@ -5,12 +5,12 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
-const flash = require('connect-flash');
-
+// const flash = require('connect-flash');
+//FIXME
 //TODO: Create error controller
 // const errorController = require('./controllers/error');
 
-
+//Todo
 
 //TODO: Set up correct database URI
 // const MONGODB_URI = 'mongodb+srv://hego64:O2td48l7fmUUtMrp@cluster0.cgnnu.mongodb.net/shop';
@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // );
 
 // app.use(csrfProtection);
-app.use(flash());
+// app.use(flash());
 
 app.use((req, res, next) => {
     //TODO: Set up this middleware for easy authentication verification
