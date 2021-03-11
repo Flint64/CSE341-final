@@ -9,22 +9,22 @@ exports.getTickets = (req, res, next) => {
     //Find based on Project ID
 
     Ticket.find({ 'projectId': req.params.projectId })
-    .then(tickets => {
-      return res.status(200).json({
-            tickets: tickets      
+        .then(tickets => {
+            return res.status(200).json({
+                tickets: tickets
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(err);
         });
-    })
-    .catch(err => {
-      console.log(err);
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(err);
-    });
 };
 
 
 /////////////////////////////////////////////////////////////*
-// POST Ticket
+// POST Ticket /////
 /////////////////////////////////////////////////////////////*
 exports.postTicket = (req, res, next) => {
     const title = req.body.title;
@@ -36,14 +36,14 @@ exports.postTicket = (req, res, next) => {
     //FIXME: Get the userID, likely req.session
     const userId = req.body.userId;
 
-    const errors = validationResult(req); 
+    const errors = validationResult(req);
     console.log(errors);
-    
+
     if (!errors.isEmpty()) {
-      return res.status(422).json({
-        errorMessage: errors.array()[0].msg,
-        validationErrors: errors.array()
-      });
+        return res.status(422).json({
+            errorMessage: errors.array()[0].msg,
+            validationErrors: errors.array()
+        });
     }
 
     const ticket = new Ticket({
@@ -52,12 +52,12 @@ exports.postTicket = (req, res, next) => {
         projectId: projectId,
         userId: userId
     });
-        
+
     return ticket.save().then(result => {
         res.status(201).json({
-            message: "Ticket posted successfully"
-        })
-        .catch(err => console.log(err));
+                message: "Ticket posted successfully"
+            })
+            .catch(err => console.log(err));
     }).catch(err => { console.log(err); })
 
-  };
+};
