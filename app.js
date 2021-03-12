@@ -15,7 +15,7 @@ const csrf = require('csurf');
 //TODO: Set up correct database URI
 // const MONGODB_URI = 'mongodb+srv://hego64:O2td48l7fmUUtMrp@cluster0.cgnnu.mongodb.net/shop';
 const MONGODB_URI = 'mongodb+srv://hego64:O2td48l7fmUUtMrp@cluster0.cgnnu.mongodb.net/support';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 //TODO: Handle sessions
 const app = express();
