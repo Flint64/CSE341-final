@@ -52,9 +52,11 @@ exports.getProject = (req, res, next) => {
 exports.postAddProject = (req, res, next) => {
     //gets a new name for a project
     const projectName = req.body.name;
+    const projectDescription = req.body.description;
 
     const newProject = new Project({
         name: projectName,
+        description: projectDescription
     });
 
     //save it

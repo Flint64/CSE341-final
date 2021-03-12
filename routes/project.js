@@ -16,6 +16,7 @@ router.post('/submitProjectTicket',
                 }
             })
         }),
+        body('description', )
         //Must have a unique name
     ], projectController.postAddProject);
 
