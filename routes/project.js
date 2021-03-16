@@ -23,6 +23,6 @@ router.post('/submitProjectTicket',
 
 // router.post('/removeProjectTicket', projectController.function);
 
-router.post('/submitProject', projectsController.postAddProject);
+// router.post('/submitProject', projectsController.postAddProject);
 
 module.exports = router;
