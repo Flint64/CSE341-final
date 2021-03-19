@@ -2,6 +2,7 @@ const User = require('../models/user');
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const { validationResult } = require("express-validator/check");
+const jwt = require('jsonwebtoken');
 
 /***************************************************************************
  * Post Signup
