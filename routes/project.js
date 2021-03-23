@@ -7,7 +7,7 @@ const projectController = require('../controllers/project');
 
 router.get('/projects', projectController.getProjects);
 
-router.post('/submitProjectTicket',
+router.post('/submitProject',
     isAuth, [
         body('name', 'Name must be at least 4 characters and only text & numbers').isLength({ min: 4 }).isAlphanumeric().trim().custom((value, { req }) => {
             return Project.findOne({ name: value }).then(projectDoc => {
@@ -16,13 +16,10 @@ router.post('/submitProjectTicket',
                 }
             })
         }),
-        body('description', )
+        body('description', 'Description must be at least 4 characters long.').isLength({ min: 4 })
         //Must have a unique name
     ], projectController.postAddProject);
 
-
-// router.post('/removeProjectTicket', projectController.function);
-
-// router.post('/submitProject', projectsController.postAddProject);
+// router.post('/removeProject', projectController.function);
 
 module.exports = router;

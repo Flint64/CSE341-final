@@ -1,5 +1,5 @@
 const Ticket = require('../models/ticket');
-const { ObjectId } = require('mongodb');
+const { validationResult } = require("express-validator/check");
 
 /////////////////////////////////////////////////////////////*
 // GET Tickets
