@@ -7,6 +7,8 @@ const projectController = require('../controllers/project');
 
 router.get('/projects', projectController.getProjects);
 
+router.get('/project/:projectId', projectController.getProject);
+
 router.post('/submitProject',
     isAuth, [
         body('name', 'Name must be at least 4 characters and only text & numbers').isLength({ min: 4 }).isAlphanumeric().trim().custom((value, { req }) => {

@@ -7,18 +7,15 @@ const router = express.Router();
 
 // router.get('/getTickets/:projectId', ticketController.getTickets);
 
-router.post('/postTicket',
-    isAuth, [
+router.post('/postTicket', isAuth, [
         body('title', 'Title must be at least 5 characters and only text & numbers').isLength({ min: 5 }).isAlphanumeric().trim(),
         body('description', 'Description must be at least 10 characters').isLength({ min: 10 }).trim(),
         body('projectId', 'Is the project ID correct or missing?').trim(),
         body('userId', 'Is the user ID correct or missing?').trim()
-
     ], ticketController.postTicket);
 
 //UPDATE ticket
-router.put('/:postId',
-    isAuth, [
+router.put('/:postId', isAuth, [
         body('title')
         .trim()
         .isLength({ min: 5 }),

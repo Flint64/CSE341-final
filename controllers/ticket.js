@@ -51,12 +51,18 @@ exports.postTicket = (req, res, next) => {
         userId: userId
     });
 
-    return ticket.save().then(result => {
+    ticket.save().then(result => {
         res.status(201).json({
-                message: "Ticket posted successfully"
-            })
-            .catch(err => console.log(err));
-    }).catch(err => { console.log(err); })
+            message: "Ticket posted successfully"
+        })
+    }).catch(err => console.log(err));
+
+    // return ticket.save().then(result => {
+    //     res.status(201).json({
+    //             message: "Ticket posted successfully"
+    //         })
+    //         .catch(err => console.log(err));
+    // }).catch(err => { console.log(err); })
 
 };
 

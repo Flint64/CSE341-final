@@ -24,6 +24,9 @@ exports.getProjects = (req, res, next) => {
 // GET project
 /////////////////////////////////////////////////////////////*
 exports.getProject = (req, res, next) => {
+
+    let foundProject;
+
     //Find based on Project ID
     const projectId = req.params.projectId;
     if (!projectId) {
@@ -32,18 +35,39 @@ exports.getProject = (req, res, next) => {
         return next(error);
     }
 
-    Ticket.find({ projectId: projectId })
-        .then((tickets) => {
-            return res.status(200).json({
-                tickets: tickets,
-            });
-        })
-        .catch((err) => {
-            console.log(err);
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(err);
-        });
+    Project.findById(projectId).then(project => {
+        foundProject = project;
+        Ticket.find({projectId: projectId}).then(tickets => {
+            return res.status(200).json({project: foundProject, tickets: tickets});
+        }).catch(err => {console.log(err)});
+    }).catch(err => {console.log(err)});
+
+    // Project.find({projectId: projectId}).then(project => {
+    //     Ticket.find({projectId: projectId}).then(tickets => {
+    //         return res.status(200).json({project: project, tickets: tickets})
+    //     })
+    // })
+
+    // Project.findOne({projectId: projectId})
+    //     .then(project => {
+    //         return res.status(200).json({project: project});
+    //     }).catch(err => {
+    //         console.log(err);
+    //         return res.status(404).json({message: "Can't find project"});
+    //     })
+
+    // Ticket.find({ projectId: projectId })
+    //     .then((tickets) => {
+    //         return res.status(200).json({
+    //             tickets: tickets,
+    //         });
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //         const error = new Error(err);
+    //         error.httpStatusCode = 500;
+    //         return next(err);
+    //     });
 };
 
 /////////////////////////////////////////////////////////////*
