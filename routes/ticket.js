@@ -15,7 +15,7 @@ router.post('/postTicket', isAuth, [
     ], ticketController.postTicket);
 
 //UPDATE ticket
-router.put('/:postId', isAuth, [
+router.put('/update/:postId', isAuth, [
         body('title')
         .trim()
         .isLength({ min: 5 }),
@@ -26,7 +26,7 @@ router.put('/:postId', isAuth, [
     ticketController.updateTicket
 );
 
-router.delete('/:postId', isAuth, ticketController.deleteTicket);
+router.delete('/delete/:postId', isAuth, ticketController.deleteTicket);
 router.get('/getUserTickets', isAuth, ticketController.getUserTickets);
 
 module.exports = router;
