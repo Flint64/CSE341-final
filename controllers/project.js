@@ -1,5 +1,6 @@
 const Project = require("../models/project");
 const Ticket = require("../models/ticket");
+const { validationResult } = require("express-validator/check");
 
 /////////////////////////////////////////////////////////////*
 // GET all projects
