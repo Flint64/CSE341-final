@@ -26,7 +26,7 @@ router.put('/update/:ticketId', isAuth, [
     ticketController.updateTicket
 );
 
-router.delete('/delete/:ticketId', ticketController.deleteTicket);
+router.delete('/delete/:ticketId', isAuth, ticketController.deleteTicket);
 
 router.get('/getUserTickets', isAuth, ticketController.getUserTickets);
 
