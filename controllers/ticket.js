@@ -1,5 +1,5 @@
 const Ticket = require('../models/ticket');
-const { validationResult } = require("express-validator/check");
+const { ObjectId } = require('mongodb');
 
 /////////////////////////////////////////////////////////////*
 // GET Tickets
@@ -51,18 +51,12 @@ exports.postTicket = (req, res, next) => {
         userId: userId
     });
 
-    ticket.save().then(result => {
+    return ticket.save().then(result => {
         res.status(201).json({
-            message: "Ticket posted successfully"
-        })
-    }).catch(err => console.log(err));
-
-    // return ticket.save().then(result => {
-    //     res.status(201).json({
-    //             message: "Ticket posted successfully"
-    //         })
-    //         .catch(err => console.log(err));
-    // }).catch(err => { console.log(err); })
+                message: "Ticket posted successfully"
+            })
+            .catch(err => console.log(err));
+    }).catch(err => { console.log(err); })
 
 };
 
@@ -130,6 +124,31 @@ exports.updateTicket = (req, res, next) => {
 // DELETE Ticket
 /////////////////////////////////////////////////////////////*
 exports.deleteTicket = (req, res, next) => {
+
+    Ticket.findById(req.params.ticketId).then(ticket => {
+
+        if (!ticket) {
+            const error = new Error('Could not find ticket.');
+            error.statusCode = 404;
+            console.log(error);
+            throw error;
+        }
+
+        //Check logged in user
+        if (ticket.userId.toString() !== req.userId) {
+            const error = new Error('Not authorized!');
+            error.statusCode = 403;
+            console.log(error);
+            throw error;
+        }
+
+        Ticket.findByIdAndRemove(req.params.ticketId).then(result => {
+            return res.status(200).json({ message: 'Deleted ticket.' });
+        }).catch(err => {console.log(err)});
+
+    }).catch(err => {console.log(err)});
+
+    /*
     const ticketId = req.params.ticketId;
     Ticket.findById(ticketId)
         .then(ticket => {
@@ -138,12 +157,12 @@ exports.deleteTicket = (req, res, next) => {
                 error.statusCode = 404;
                 throw error;
             }
-            if (ticket.userId.toString() !== req.userId) {
-                const error = new Error('Not authorized!');
-                error.statusCode = 403;
-                throw error;
-            }
             // Check logged in user
+            // if (ticket.userId.toString() !== req.userId) {
+            //     const error = new Error('Not authorized!');
+            //     error.statusCode = 403;
+            //     throw error;
+            // }
             return Ticket.findByIdAndRemove(ticketId);
         })
         .then(result => {
@@ -154,5 +173,5 @@ exports.deleteTicket = (req, res, next) => {
                 err.statusCode = 500;
             }
             next(err);
-        });
+        });*/
 };
