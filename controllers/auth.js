@@ -1,9 +1,9 @@
-const User = require('../models/user');
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const { validationResult } = require("express-validator/check");
 const jwt = require('jsonwebtoken');
-
+const Ticket = require('../models/ticket');
+const User = require('../models/user');
 /***************************************************************************
  * Post Signup
  ****************************************************************************/
@@ -96,13 +96,22 @@ exports.login = (req, res, next) => {
  * GET Profile
  ****************************************************************************/
 exports.getProfile = (req, res, next) => {
-    if (!req.userId) {
-        const error = new Error('Not authorized!');
-        error.statusCode = 403;
-        throw error;
-    }
-    res.status(200).json({
-        username: req.username,
-        email: req.email
-    })
+    
+User.findById(req.params.userId).then(user => {
+    let foundUser = user;
+    Ticket.find({userId: req.userId}).then(tickets => {
+        return res.status(200).json({username: foundUser.username, email: foundUser.email, tickets: tickets});
+    }).catch(err => {console.log(err)});
+}).catch(err => {console.log(err)});
+
+
+    // if (!req.userId) {
+    //     const error = new Error('Not authorized!');
+    //     error.statusCode = 403;
+    //     throw error;
+    // }
+    // res.status(200).json({
+    //     username: req.username,
+    //     email: req.email
+    // })
 }

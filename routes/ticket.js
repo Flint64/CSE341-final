@@ -1,5 +1,6 @@
 const express = require('express');
 const ticketController = require('../controllers/ticket');
+
 const { check, body } = require('express-validator/check');
 const isAuth = require('../middleware/is-auth');
 
