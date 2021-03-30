@@ -34,6 +34,6 @@ router.post('/signup', [
 
 router.post('/login', authController.login);
 
-router.get('/profile/:userId', isAUth, authController.getProfile);
+router.get('/profile/:userId', isAuth, authController.getProfile);
 
 module.exports = router;
